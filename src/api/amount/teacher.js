@@ -2,7 +2,7 @@ import request from '@/router/axios';
 
 export const getList = (current, size, params) => {
   return request({
-    url: '/api/blade-amount/teacher/list',
+    url: '/api/blade-amount/teacher/page',
     method: 'get',
     params: {
       ...params,
@@ -34,7 +34,7 @@ export const remove = (ids) => {
 
 export const add = (row) => {
   return request({
-    url: '/api/blade-amount/teacher/submit',
+    url: '/api/blade-amount/teacher/save',
     method: 'post',
     data: row
   })
@@ -42,7 +42,7 @@ export const add = (row) => {
 
 export const update = (row) => {
   return request({
-    url: '/api/blade-amount/teacher/submit',
+    url: '/api/blade-amount/teacher/update',
     method: 'post',
     data: row
   })

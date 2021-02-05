@@ -4,7 +4,6 @@
                :table-loading="loading"
                :data="data"
                :page="page"
-               :permission="permissionList"
                :before-open="beforeOpen"
                v-model="form"
                ref="crud"
@@ -22,7 +21,6 @@
                    size="small"
                    icon="el-icon-delete"
                    plain
-                   v-if="permission.teacher_delete"
                    @click="handleDelete">删 除
         </el-button>
       </template>
@@ -55,23 +53,24 @@
           border: true,
           index: true,
           viewBtn: true,
+          editBtn: true,
           selection: true,
           column: [
             {
-              label: "主键id",
-              prop: "id",
+              label: "老师姓名",
+              prop: "teacherName",
               rules: [{
                 required: true,
-                message: "请输入主键id",
+                message: "请输入老师姓名",
                 trigger: "blur"
               }]
             },
             {
-              label: "老师id",
-              prop: "teacherId",
+              label: "所属学院",
+              prop: "teacherDept",
               rules: [{
                 required: true,
-                message: "请输入老师id",
+                message: "请输入所属学院",
                 trigger: "blur"
               }]
             },

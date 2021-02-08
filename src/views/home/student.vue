@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import {getList, getDetail, add, update, remove} from "@/api/amount/teacher";
+  import {getList, getDetail, add, update, remove} from "@/api/student/student";
   import {mapGetters} from "vuex";
 
   export default {
@@ -53,33 +53,23 @@
           border: true,
           index: true,
           viewBtn: true,
-          editBtn: true,
           selection: true,
           column: [
             {
-              label: "老师姓名",
+              label: "姓名",
+              prop: "studentName",
+              rules: [{
+                required: true,
+                message: "请输入姓名",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: "老师",
               prop: "teacherName",
               rules: [{
                 required: true,
-                message: "请输入老师姓名",
-                trigger: "blur"
-              }]
-            },
-            {
-              label: "所属学院",
-              prop: "teacherDept",
-              rules: [{
-                required: true,
-                message: "请输入所属学院",
-                trigger: "blur"
-              }]
-            },
-            {
-              label: "学生数量",
-              prop: "studentAmount",
-              rules: [{
-                required: true,
-                message: "请输入学生数量",
+                message: "请选择老师",
                 trigger: "blur"
               }]
             },
@@ -92,10 +82,10 @@
       ...mapGetters(["permission"]),
       permissionList() {
         return {
-          addBtn: this.vaildData(this.permission.teacher_add, false),
-          viewBtn: this.vaildData(this.permission.teacher_view, false),
-          delBtn: this.vaildData(this.permission.teacher_delete, false),
-          editBtn: this.vaildData(this.permission.teacher_edit, false)
+          addBtn: this.vaildData(this.permission.student_add, false),
+          viewBtn: this.vaildData(this.permission.student_view, false),
+          delBtn: this.vaildData(this.permission.student_delete, false),
+          editBtn: this.vaildData(this.permission.student_edit, false)
         };
       },
       ids() {

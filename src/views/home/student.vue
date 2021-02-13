@@ -8,8 +8,6 @@
                v-model="form"
                ref="crud"
                @row-update="rowUpdate"
-               @row-save="rowSave"
-               @row-del="rowDel"
                @search-change="searchChange"
                @search-reset="searchReset"
                @selection-change="selectionChange"
@@ -17,19 +15,13 @@
                @size-change="sizeChange"
                @on-load="onLoad">
       <template slot="menuLeft">
-        <el-button type="danger"
-                   size="small"
-                   icon="el-icon-delete"
-                   plain
-                   @click="handleDelete">删 除
-        </el-button>
       </template>
     </avue-crud>
   </basic-container>
 </template>
 
 <script>
-  import {getList, getDetail, add, update, remove} from "@/api/student/student";
+  import {getList, getDetail,update} from "@/api/student/student";
   import {mapGetters} from "vuex";
 
   export default {
@@ -56,20 +48,62 @@
           selection: true,
           column: [
             {
-              label: "姓名",
-              prop: "studentName",
+              label: "老师姓名",
+              prop: "teacherName",
+              editDisplay:false,
               rules: [{
-                required: true,
+                required: false,
                 message: "请输入姓名",
                 trigger: "blur"
               }]
             },
             {
-              label: "老师",
-              prop: "teacherName",
+              label: "职称",
+              prop: "postName",
+              editDisplay:false,
               rules: [{
-                required: true,
-                message: "请选择老师",
+                required: false,
+                message: "请输入职称",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: "所属学院",
+              prop: "dept",
+              editDisplay:false,
+              rules: [{
+                required: false,
+                message: "请输入所属学院",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: "联系方式",
+              prop: "teacherPhoneNumber",
+              editDisplay:false,
+              rules: [{
+                required: false,
+                message: "请输入学院",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: "剩余名额",
+              prop: "residualAmount",
+              editDisplay:false,
+              rules: [{
+                required: false,
+                message: "请输入剩余名额",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: "已选择",
+              prop: "booleanChoose",
+              editDisplay:false,
+              rules: [{
+                required: false,
+                message: "是否已选择",
                 trigger: "blur"
               }]
             },
@@ -82,34 +116,12 @@
       ...mapGetters(["permission"]),
       permissionList() {
         return {
-          addBtn: this.vaildData(this.permission.student_add, false),
           viewBtn: this.vaildData(this.permission.student_view, false),
-          delBtn: this.vaildData(this.permission.student_delete, false),
           editBtn: this.vaildData(this.permission.student_edit, false)
         };
-      },
-      ids() {
-        let ids = [];
-        this.selectionList.forEach(ele => {
-          ids.push(ele.id);
-        });
-        return ids.join(",");
       }
     },
     methods: {
-      rowSave(row, done, loading) {
-        add(row).then(() => {
-          done();
-          this.onLoad(this.page);
-          this.$message({
-            type: "success",
-            message: "操作成功!"
-          });
-        }, error => {
-          window.console.log(error);
-          loading();
-        });
-      },
       rowUpdate(row, index, done, loading) {
         update(row).then(() => {
           done();
@@ -122,45 +134,6 @@
           window.console.log(error);
           loading();
         });
-      },
-      rowDel(row) {
-        this.$confirm("确定将选择数据删除?", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-          .then(() => {
-            return remove(row.id);
-          })
-          .then(() => {
-            this.onLoad(this.page);
-            this.$message({
-              type: "success",
-              message: "操作成功!"
-            });
-          });
-      },
-      handleDelete() {
-        if (this.selectionList.length === 0) {
-          this.$message.warning("请选择至少一条数据");
-          return;
-        }
-        this.$confirm("确定将选择数据删除?", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-          .then(() => {
-            return remove(this.ids);
-          })
-          .then(() => {
-            this.onLoad(this.page);
-            this.$message({
-              type: "success",
-              message: "操作成功!"
-            });
-            this.$refs.crud.toggleSelection();
-          });
       },
       beforeOpen(done, type) {
         if (["edit", "view"].includes(type)) {

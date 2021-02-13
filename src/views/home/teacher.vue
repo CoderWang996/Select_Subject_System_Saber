@@ -60,6 +60,7 @@
               label: "老师姓名",
               prop: "teacherName",
               addDisplay:false,
+              editDisplay:false,
               rules: [{
                 required: false,
                 message: "请输入老师姓名",
@@ -70,6 +71,7 @@
               label: "所属学院",
               prop: "teacherDept",
               addDisplay:false,
+              editDisplay:false,
               rules: [{
                 required: false,
                 message: "请输入所属学院",
@@ -82,6 +84,17 @@
               rules: [{
                 required: true,
                 message: "请输入学生数量",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: "剩余名额",
+              prop: "residualAmount",
+              addDisplay:false,
+              editDisplay:false,
+              rules: [{
+                required: false,
+                message: "请输入剩余名额",
                 trigger: "blur"
               }]
             },

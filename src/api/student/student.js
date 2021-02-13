@@ -22,29 +22,13 @@ export const getDetail = (id) => {
   })
 }
 
-export const remove = (ids) => {
+export const update = (params) => {
   return request({
-    url: '/api/blade-student/student/remove',
+    url: '/api/blade-student/student/save',
     method: 'post',
     params: {
-      ids,
+      ...params,
     }
-  })
-}
-
-export const add = (row) => {
-  return request({
-    url: '/api/blade-student/student/submit',
-    method: 'post',
-    data: row
-  })
-}
-
-export const update = (row) => {
-  return request({
-    url: '/api/blade-student/student/submit',
-    method: 'post',
-    data: row
   })
 }
 

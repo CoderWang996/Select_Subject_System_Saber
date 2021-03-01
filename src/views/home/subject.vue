@@ -24,12 +24,15 @@
                    @click="handleDelete">删 除
         </el-button>
       </template>
+      <template slot-scope="scope" slot="menu">
+        <el-button style="margin-left:10px;" size="small" type="text" icon="el-icon-user" @click="selected(scope.row.id)" >选择</el-button>
+      </template>
     </avue-crud>
   </basic-container>
 </template>
 
 <script>
-  import {getList, getDetail, add, update, remove} from "@/api/subject/subject";
+  import {getList, getDetail, add, update, remove, select} from "@/api/subject/subject";
   import {mapGetters} from "vuex";
 
   export default {
@@ -108,8 +111,6 @@
             {
               label: "备注",
               prop: "remark",
-              addDisplay:false,
-              editDisplay:false,
               rules: [{
                 required: false,
                 message: "请输入备注",
@@ -140,6 +141,11 @@
       }
     },
     methods: {
+      async selected(id){
+        await select(id)
+        this.$message.success('操作成功')
+        await this.onLoad(this.page, {})
+      },
       rowSave(row, done, loading) {
         add(row).then(() => {
           done();

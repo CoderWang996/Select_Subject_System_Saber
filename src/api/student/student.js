@@ -27,7 +27,7 @@ export const update = (params) => {
     url: '/api/blade-student/student/save',
     method: 'post',
     params: {
-      ...params,
+      teacherId: params,
     }
   })
 }

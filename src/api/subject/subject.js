@@ -48,3 +48,13 @@ export const update = (row) => {
   })
 }
 
+export const select = (id) => {
+  return request({
+    url: '/api/blade-subject/subject/select',
+    method: 'post',
+    params: {
+      id
+    }
+  })
+}
+

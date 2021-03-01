@@ -14,7 +14,8 @@
                @current-change="currentChange"
                @size-change="sizeChange"
                @on-load="onLoad">
-      <template slot="menuLeft">
+      <template slot-scope="scope" slot="menu">
+        <el-button style="margin-left:10px;" size="small" type="text" icon="el-icon-user" @click="updatedd(scope)" @click.native="tip">选择</el-button>
       </template>
     </avue-crud>
   </basic-container>
@@ -39,13 +40,16 @@
         option: {
           height: 'auto',
           calcHeight: 210,
-          searchShow: true,
+          searchShow: false,
           searchMenuSpan: 6,
           tip: false,
           border: true,
           index: true,
           viewBtn: true,
+          delBtn: false,
+          editBtn: false,
           selection: true,
+          addBtn: false,
           column: [
             {
               label: "老师姓名",
@@ -122,6 +126,12 @@
       }
     },
     methods: {
+      async updatedd(ee) {
+        await update(ee.row.teacherId)
+        this.$message.success('操作成功')
+        await this.onLoad(this.page, {})
+        console.log(ee.row.teacherId, '书记')
+      },
       rowUpdate(row, index, done, loading) {
         update(row).then(() => {
           done();
